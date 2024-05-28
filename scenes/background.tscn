@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://jdi6bpiepha4"]
+
+[ext_resource type="Texture2D" uid="uid://bpfiq5ag5ldu4" path="res://assets/sprites/flappy bird stock assets.png" id="1_n7dj6"]
+
+[node name="Background" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_n7dj6")
+region_enabled = true
+region_rect = Rect2(1, 28, 40, 31)

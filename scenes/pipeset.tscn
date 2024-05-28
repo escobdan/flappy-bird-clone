@@ -1,0 +1,33 @@
+[gd_scene load_steps=2 format=3 uid="uid://c0twi54ufu63m"]
+
+[ext_resource type="Texture2D" uid="uid://bpfiq5ag5ldu4" path="res://assets/sprites/flappy bird stock assets.png" id="1_2r87r"]
+
+[node name="Pipe set" type="Node2D"]
+
+[node name="Opening" type="Sprite2D" parent="."]
+position = Vector2(0, 20.57)
+texture = ExtResource("1_2r87r")
+region_enabled = true
+region_rect = Rect2(1, 1, 16, 6)
+
+[node name="Shaft" type="Sprite2D" parent="."]
+position = Vector2(0, -19.5)
+scale = Vector2(1, 7.5)
+texture = ExtResource("1_2r87r")
+region_enabled = true
+region_rect = Rect2(3, 9, 12, 10)
+
+[node name="Opening2" type="Sprite2D" parent="."]
+position = Vector2(0, 51.74)
+texture = ExtResource("1_2r87r")
+flip_v = true
+region_enabled = true
+region_rect = Rect2(1, 1, 16, 6)
+
+[node name="Shaft2" type="Sprite2D" parent="."]
+position = Vector2(0, 92)
+scale = Vector2(1, 7.5)
+texture = ExtResource("1_2r87r")
+flip_v = true
+region_enabled = true
+region_rect = Rect2(3, 9, 12, 10)
