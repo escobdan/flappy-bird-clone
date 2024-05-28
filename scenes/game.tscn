@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://bup52fmtohhyl"]
+
+[ext_resource type="PackedScene" uid="uid://bl28ws7unlhk2" path="res://scenes/player.tscn" id="1_jrm7f"]
+[ext_resource type="Script" path="res://scripts/GameManager.gd" id="1_tmaic"]
+[ext_resource type="Script" path="res://scripts/player.gd" id="2_o11im"]
+[ext_resource type="PackedScene" uid="uid://b8jymkd7rhh1b" path="res://scenes/killzone.tscn" id="3_6ib0c"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_gdtdt"]
+distance = -53.75
+
+[node name="Game" type="Node2D"]
+
+[node name="GameManager" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("1_tmaic")
+
+[node name="Player" parent="." instance=ExtResource("1_jrm7f")]
+script = ExtResource("2_o11im")
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+offset = Vector2(30, 0.11)
+zoom = Vector2(6, 6)
+limit_top = -70
+limit_bottom = 70
+
+[node name="WorldBorder" parent="." instance=ExtResource("3_6ib0c")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBorder"]
+position = Vector2(30, 0.25)
+shape = SubResource("WorldBoundaryShape2D_gdtdt")
