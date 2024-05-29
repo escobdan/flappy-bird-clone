@@ -1,15 +1,16 @@
 extends Node2D
 
-var speed = 100
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
+var speed = 250
+signal scored
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	position.x -= speed * delta
 	
-	if position.x < -160:
+	if global_position.x < -160:
+		print("destroyed pipe")
 		queue_free()
+
+
+func _on_score_area_body_entered(body):
+	scored.emit()

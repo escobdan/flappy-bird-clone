@@ -1,10 +1,14 @@
 [gd_scene load_steps=2 format=3 uid="uid://jdi6bpiepha4"]
 
-[ext_resource type="Texture2D" uid="uid://bpfiq5ag5ldu4" path="res://assets/sprites/flappy bird stock assets.png" id="1_n7dj6"]
+[ext_resource type="Texture2D" uid="uid://csoforn487cy8" path="res://assets/sprites/bg.png" id="1_uqkpf"]
 
 [node name="Background" type="Node2D"]
+position = Vector2(0, -78)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_n7dj6")
-region_enabled = true
-region_rect = Rect2(1, 28, 40, 31)
+position = Vector2(438, 345)
+texture = ExtResource("1_uqkpf")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(1302, 345)
+texture = ExtResource("1_uqkpf")

@@ -1,55 +1,88 @@
-[gd_scene load_steps=5 format=3 uid="uid://c0twi54ufu63m"]
+[gd_scene load_steps=10 format=3 uid="uid://c0twi54ufu63m"]
 
 [ext_resource type="Texture2D" uid="uid://bpfiq5ag5ldu4" path="res://assets/sprites/flappy bird stock assets.png" id="1_2r87r"]
 [ext_resource type="Texture2D" uid="uid://cpf65slq2reih" path="res://assets/sprites/pipe opening.png" id="1_6b50p"]
 [ext_resource type="Script" path="res://scripts/pipeset.gd" id="1_6nmuf"]
 [ext_resource type="PackedScene" uid="uid://b8jymkd7rhh1b" path="res://scenes/killzone.tscn" id="3_fd3rs"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d7sxi"]
+size = Vector2(81, 30)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mhwm2"]
+size = Vector2(60, 371)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0pyqj"]
+size = Vector2(80, 29)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sxgdf"]
+size = Vector2(60, 373)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ac8gf"]
+size = Vector2(16, 158)
+
 [node name="Pipe Set" type="Node2D"]
-position = Vector2(-635, 1)
+position = Vector2(1257, 331)
 script = ExtResource("1_6nmuf")
 
 [node name="Opening" type="Sprite2D" parent="."]
-position = Vector2(0, -24)
+position = Vector2(1.625, -115.5)
+scale = Vector2(5, 5)
 texture = ExtResource("1_6b50p")
 region_enabled = true
 region_rect = Rect2(1, 1, 16, 6)
 
 [node name="Shaft" type="Sprite2D" parent="Opening"]
-position = Vector2(0, -39)
+position = Vector2(0, -39.8)
 scale = Vector2(1, 7.5)
 texture = ExtResource("1_2r87r")
 region_enabled = true
 region_rect = Rect2(3, 9, 12, 10)
 
-[node name="Killzone" parent="." instance=ExtResource("3_fd3rs")]
-position = Vector2(0, -23)
+[node name="Killzone" parent="Opening" instance=ExtResource("3_fd3rs")]
+position = Vector2(-0.325012, 12.5)
+scale = Vector2(0.2, 0.2)
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Killzone"]
-rotation = 3.14159
-scale = Vector2(0.891964, 1)
-build_mode = 1
-polygon = PackedVector2Array(-8.96897, -0.999994, -8.96897, 4.00001, -6.72673, 4.00001, -6.72672, 79, 6.72673, 79, 6.72673, 4.00001, 8.96897, 4.00001, 8.96897, -0.999994)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Opening/Killzone"]
+position = Vector2(1.5, -63)
+shape = SubResource("RectangleShape2D_d7sxi")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Opening/Killzone"]
+position = Vector2(1, -263.5)
+shape = SubResource("RectangleShape2D_mhwm2")
 
 [node name="Opening2" type="Sprite2D" parent="."]
-position = Vector2(0, 19)
+position = Vector2(1, 73)
+scale = Vector2(5, 5)
 texture = ExtResource("1_6b50p")
 flip_v = true
 region_enabled = true
 region_rect = Rect2(1, 1, 16, 6)
 
-[node name="Shaft2" type="Sprite2D" parent="."]
-position = Vector2(0, 59)
+[node name="Shaft2" type="Sprite2D" parent="Opening2"]
+position = Vector2(0, 39.8)
 scale = Vector2(1, 7.5)
 texture = ExtResource("1_2r87r")
 flip_v = true
 region_enabled = true
 region_rect = Rect2(3, 9, 12, 10)
 
-[node name="Killzone2" parent="." instance=ExtResource("3_fd3rs")]
-position = Vector2(0, 17)
+[node name="Killzone2" parent="Opening2" instance=ExtResource("3_fd3rs")]
+position = Vector2(0, -9.39999)
+scale = Vector2(0.2, 0.2)
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Killzone2"]
-scale = Vector2(0.891964, 1)
-build_mode = 1
-polygon = PackedVector2Array(8.96899, 5, 6.72675, 5, 6.72673, 79, -6.72673, 79, -6.72675, 5, -8.96899, 5, -8.96897, -1, 8.96897, -1)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Opening2/Killzone2"]
+position = Vector2(0, 47.5)
+shape = SubResource("RectangleShape2D_0pyqj")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Opening2/Killzone2"]
+position = Vector2(0, 247.5)
+shape = SubResource("RectangleShape2D_sxgdf")
+
+[node name="ScoreArea" type="Area2D" parent="."]
+position = Vector2(53, -18)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScoreArea"]
+position = Vector2(-1, -3)
+shape = SubResource("RectangleShape2D_ac8gf")
+
+[connection signal="body_entered" from="ScoreArea" to="." method="_on_score_area_body_entered"]

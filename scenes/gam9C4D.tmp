@@ -8,81 +8,69 @@
 [ext_resource type="PackedScene" uid="uid://b8jymkd7rhh1b" path="res://scenes/killzone.tscn" id="3_6ib0c"]
 [ext_resource type="PackedScene" uid="uid://bfnvrrvh2ibxy" path="res://scenes/pipe_spawner.tscn" id="6_e2lvo"]
 [ext_resource type="Texture2D" uid="uid://cty0nthx6otcw" path="res://assets/sprites/bird.png" id="7_82nne"]
-[ext_resource type="Texture2D" uid="uid://jgvsm4rwa1j8" path="res://assets/sprites/ground.png" id="10_myd71"]
+[ext_resource type="Script" path="res://scripts/boundaries.gd" id="7_o0h66"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vbqw0"]
-size = Vector2(1382, 74.5)
+size = Vector2(213, 13)
 
 [node name="Game" type="Node2D"]
-position = Vector2(96, 54)
-scale = Vector2(0.994691, 1)
+position = Vector2(96, 57)
 
 [node name="GameManager" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("1_tmaic")
 
 [node name="Label" type="Label" parent="GameManager"]
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -10.5
-offset_top = 16.25
-offset_right = 10.5
-offset_bottom = 40.25
-grow_horizontal = 2
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 14.0
+offset_bottom = 16.0
 size_flags_horizontal = 6
 size_flags_vertical = 2
 theme_override_fonts/font = ExtResource("2_jwl78")
-theme_override_font_sizes/font_size = 24
 text = "0"
 horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Player" parent="." instance=ExtResource("1_jrm7f")]
-z_index = 1
-position = Vector2(56.2989, 186)
-script = ExtResource("2_o11im")
 
 [node name="Background" parent="." instance=ExtResource("2_a1mpr")]
-position = Vector2(-102.544, -75)
+position = Vector2(-1, 0)
+scale = Vector2(9.76, 8.24)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(6, 6)
+editor_draw_limits = true
+
+[node name="Player" parent="." instance=ExtResource("1_jrm7f")]
+position = Vector2(-67, 2)
+script = ExtResource("2_o11im")
 
 [node name="PipeSpawner" parent="." instance=ExtResource("6_e2lvo")]
-position = Vector2(1220.48, 255)
 
-[node name="Control" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 40.0
-grow_horizontal = 2
+[node name="Boundaries" type="Node" parent="." node_paths=PackedStringArray("ceiling", "floor")]
+script = ExtResource("7_o0h66")
+ceiling = NodePath("Ceiling")
+floor = NodePath("Floor")
 
-[node name="Ceiling" parent="Control" instance=ExtResource("3_6ib0c")]
-position = Vector2(0, -57)
-scale = Vector2(1.00534, 1)
+[node name="Ceiling" parent="Boundaries" instance=ExtResource("3_6ib0c")]
+position = Vector2(96, -25)
 
-[node name="Sprite2D" type="Sprite2D" parent="Control/Ceiling"]
-position = Vector2(-20.5, -2.25)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/Ceiling"]
+position = Vector2(0, -3.5)
+shape = SubResource("RectangleShape2D_vbqw0")
+
+[node name="Sprite2D" type="Sprite2D" parent="Boundaries/Ceiling/CollisionShape2D"]
+position = Vector2(-20.5, 1.25)
 scale = Vector2(15.2813, 1.14063)
 texture = ExtResource("7_82nne")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Control/Ceiling"]
-position = Vector2(476.072, -3.5)
+[node name="Floor" parent="Boundaries" instance=ExtResource("3_6ib0c")]
+position = Vector2(96, 82)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/Floor"]
 shape = SubResource("RectangleShape2D_vbqw0")
 
-[node name="Floor" parent="." instance=ExtResource("3_6ib0c")]
-position = Vector2(258.372, 594)
-scale = Vector2(1.00534, 1)
-
-[node name="Sprite2D2" type="Sprite2D" parent="Floor"]
-position = Vector2(335.75, -29)
-scale = Vector2(0.798901, 0.452381)
-texture = ExtResource("10_myd71")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
-position = Vector2(339, -30.75)
-shape = SubResource("RectangleShape2D_vbqw0")
+[node name="Sprite2D2" type="Sprite2D" parent="Boundaries/Floor/CollisionShape2D"]
+position = Vector2(-4, 1.99997)
+scale = Vector2(15.2813, 1.40625)
+texture = ExtResource("7_82nne")
 
 [connection signal="ready" from="GameManager" to="GameManager" method="_on_ready"]
