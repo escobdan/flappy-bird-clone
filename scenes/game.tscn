@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://bup52fmtohhyl"]
+[gd_scene load_steps=11 format=3 uid="uid://bup52fmtohhyl"]
 
 [ext_resource type="PackedScene" uid="uid://bl28ws7unlhk2" path="res://scenes/player.tscn" id="1_jrm7f"]
 [ext_resource type="Script" path="res://scripts/GameManager.gd" id="1_tmaic"]
 [ext_resource type="PackedScene" uid="uid://jdi6bpiepha4" path="res://scenes/background.tscn" id="2_a1mpr"]
+[ext_resource type="FontFile" uid="uid://ilcf5uhele5y" path="res://assets/fonts/PixelOperator8.ttf" id="2_jwl78"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="2_o11im"]
 [ext_resource type="PackedScene" uid="uid://b8jymkd7rhh1b" path="res://scenes/killzone.tscn" id="3_6ib0c"]
 [ext_resource type="PackedScene" uid="uid://c0twi54ufu63m" path="res://scenes/pipeset.tscn" id="6_nqc0y"]
@@ -12,24 +13,44 @@ normal = Vector2(0, 1)
 distance = -47.0
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_gdtdt"]
-distance = 101.0
+distance = 96.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_d6uwp"]
+normal = Vector2(1, 0)
+distance = -1.0
 
 [node name="Game" type="Node2D"]
-position = Vector2(98, 57)
+position = Vector2(96, 57)
 
 [node name="GameManager" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("1_tmaic")
 
+[node name="Timer" type="Timer" parent="GameManager"]
+
+[node name="Label" type="Label" parent="GameManager"]
+offset_right = 14.0
+offset_bottom = 16.0
+size_flags_horizontal = 6
+size_flags_vertical = 2
+theme_override_fonts/font = ExtResource("2_jwl78")
+text = "0"
+horizontal_alignment = 1
+
+[node name="Background" parent="." instance=ExtResource("2_a1mpr")]
+position = Vector2(-1, 0)
+scale = Vector2(9.76, 8.24)
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-visible = false
+follow_viewport_enabled = true
 
 [node name="TopAnchor" type="HBoxContainer" parent="CanvasLayer"]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
+offset_top = -5.0
+offset_bottom = -5.0
 grow_horizontal = 2
-metadata/_edit_use_anchors_ = true
 
 [node name="TopWorldBorder2" parent="CanvasLayer/TopAnchor" instance=ExtResource("3_6ib0c")]
 position = Vector2(107, -52)
@@ -39,15 +60,15 @@ position = Vector2(-585, 108)
 shape = SubResource("WorldBoundaryShape2D_5okia")
 
 [node name="BottomAnchor" type="HBoxContainer" parent="CanvasLayer"]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -588.0
-offset_top = -554.0
-offset_right = -588.0
-offset_bottom = -554.0
+layout_direction = 1
+anchors_preset = -1
+anchor_top = 0.144
+anchor_right = 0.15
+anchor_bottom = 0.154
+offset_left = 52.0
+offset_top = 56.32
+offset_right = -140.0
+offset_bottom = 49.12
 grow_horizontal = 2
 grow_vertical = 0
 metadata/_edit_use_anchors_ = true
@@ -56,12 +77,8 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(111, -35)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/BottomAnchor/BottomWorldBorder"]
-position = Vector2(-2, 137)
+position = Vector2(-70, 73)
 shape = SubResource("WorldBoundaryShape2D_gdtdt")
-
-[node name="Background" parent="." instance=ExtResource("2_a1mpr")]
-position = Vector2(-1, 0)
-scale = Vector2(5.6, 4.2)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(6, 6)
@@ -71,7 +88,17 @@ editor_draw_limits = true
 position = Vector2(-67, 2)
 script = ExtResource("2_o11im")
 
-[node name="Pipe set" parent="." instance=ExtResource("6_nqc0y")]
-position = Vector2(128, -42)
+[node name="Despawner" type="Node" parent="."]
+
+[node name="Area2D" type="Area2D" parent="Despawner"]
+visible = false
+position = Vector2(-40, 55)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Despawner/Area2D"]
+position = Vector2(-42, 0)
+shape = SubResource("WorldBoundaryShape2D_d6uwp")
+
+[node name="Pipe Set2" parent="." instance=ExtResource("6_nqc0y")]
+position = Vector2(10, 0)
 
 [connection signal="ready" from="GameManager" to="GameManager" method="_on_ready"]
