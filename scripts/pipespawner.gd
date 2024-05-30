@@ -7,8 +7,7 @@ var yVariance = 170
 @onready var score_label = $Label
 @export var pipe_scene = PackedScene
 
-
-signal point_signal
+signal hit_bird_signal
 
 var score = 0
 
@@ -30,7 +29,11 @@ func spawn_pipe():
 	pipeInstance.position = Vector2(0, yPosition)
 	#pipeInstance.position = Vector2(150, -yVariance)
 	pipeInstance.scored.connect(add_point)
+	pipeInstance.hit.connect(hit_bird)
 	add_child(pipeInstance)
+	
+func hit_bird():
+	hit_bird_signal.emit()
 	
 func add_point():
 	score += 1

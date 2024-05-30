@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bup52fmtohhyl"]
+[gd_scene load_steps=13 format=3 uid="uid://bup52fmtohhyl"]
 
 [ext_resource type="PackedScene" uid="uid://bl28ws7unlhk2" path="res://scenes/player.tscn" id="1_jrm7f"]
 [ext_resource type="Script" path="res://scripts/GameManager.gd" id="1_tmaic"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://c0twi54ufu63m" path="res://scenes/pipeset.tscn" id="6_nqc0y"]
 [ext_resource type="Texture2D" uid="uid://cty0nthx6otcw" path="res://assets/sprites/bird.png" id="7_82nne"]
 [ext_resource type="Texture2D" uid="uid://jgvsm4rwa1j8" path="res://assets/sprites/ground.png" id="10_myd71"]
+[ext_resource type="PackedScene" uid="uid://bo5ue8oabshvc" path="res://scenes/game_over.tscn" id="11_c5flf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vbqw0"]
 size = Vector2(1382, 74.5)
@@ -18,7 +19,7 @@ size = Vector2(1382, 74.5)
 position = Vector2(96, 54)
 scale = Vector2(0.994691, 1)
 
-[node name="GameManager" type="Node" parent="." groups=["score_group"]]
+[node name="GameManager" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("1_tmaic")
 
@@ -88,4 +89,11 @@ texture = ExtResource("10_myd71")
 position = Vector2(339, -30.75)
 shape = SubResource("RectangleShape2D_vbqw0")
 
-[connection signal="ready" from="GameManager" to="GameManager" method="_on_ready"]
+[node name="GameOver" parent="." instance=ExtResource("11_c5flf")]
+unique_name_in_owner = true
+visible = false
+
+[connection signal="hit_bird_signal" from="PipeSpawner" to="GameManager" method="_on_pipe_spawner_hit_bird_signal"]
+[connection signal="hit_obstacle" from="Control/Ceiling" to="GameManager" method="_on_ceiling_hit_obstacle"]
+[connection signal="hit_obstacle" from="Floor" to="GameManager" method="_on_floor_hit_obstacle"]
+[connection signal="restart" from="GameOver" to="GameManager" method="_on_game_over_restart"]

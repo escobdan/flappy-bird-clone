@@ -20,7 +20,7 @@ size = Vector2(60, 373)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ac8gf"]
 size = Vector2(16, 158)
 
-[node name="Pipe Set" type="Node2D"]
+[node name="Pipe Set" type="Node2D" groups=["pipes"]]
 position = Vector2(1257, 331)
 script = ExtResource("1_6nmuf")
 
@@ -85,4 +85,6 @@ position = Vector2(53, -18)
 position = Vector2(-1, -3)
 shape = SubResource("RectangleShape2D_ac8gf")
 
+[connection signal="hit_obstacle" from="Opening/Killzone" to="." method="_on_killzone_hit_obstacle"]
+[connection signal="hit_obstacle" from="Opening2/Killzone2" to="." method="_on_killzone_2_hit_obstacle"]
 [connection signal="body_entered" from="ScoreArea" to="." method="_on_score_area_body_entered"]

@@ -4,12 +4,17 @@ extends CharacterBody2D
 const SPEED = 300.0
 const MAX_VEL = 600
 const JUMP_VELOCITY = -400.0
+const START_POS = Vector2(100, 400)
 
 @onready var animated_sprite = $AnimatedSprite2D
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
+
+func reset():
+	position = START_POS
+	set_rotation(0)
 
 func _physics_process(delta):
 	# Add the gravity.
