@@ -9,7 +9,7 @@ func _process(delta):
 	position.x -= speed * delta
 	
 	if global_position.x < -160:
-		print("destroyed pipe")
+		#print("destroyed pipe")
 		queue_free()
 
 
@@ -18,7 +18,7 @@ func _on_score_area_body_entered(body):
 
 
 func _on_killzone_hit_obstacle():
-	print("sending signal from pipeset to pipespawner")
+	#print("sending signal from pipeset to pipespawner")
 	hit.emit()
 
 
